@@ -1,16 +1,16 @@
 class Array
   protected
-    def columnized_row(fields, sized)
-      r = []
+    def qa_columnized_row(fields, sized)
+      row = []
       fields.each_with_index do |f, i|
-        r << sprintf("%0-#{sized[i]}s", f.to_s.gsub(/\n|\r/, '').slice(0, sized[i]))
+        row << sprintf("%0-#{sized[i]}s", f.to_s)
       end
-      r.join(' | ')
+      row.join(' | ')
     end
 
   public
 
-  def columnized(options = {})
+  def qa_columnized
     sized = {}
     self.each do |row|
       row.values.each_with_index do |value, i|
@@ -19,10 +19,10 @@ class Array
     end
 
     table = []
-    table << header = columnized_row(self.first.keys, sized)
-    table << header.gsub(/./, '-')
-    self.each { |row| table << columnized_row(row.values, sized) }
-    table.join("\n")
+    table << qa_columnized_row(self.first.keys, sized)
+    table << '-' * table.first.length
+    self.each { |row| table << qa_columnized_row(row.values, sized) }
+    table.join("\n   ") # Spaces added to work with format_log_entry
   end
 end
 
@@ -32,21 +32,20 @@ module ActiveRecord
   module ConnectionAdapters
     class MysqlAdapter < AbstractAdapter
       private
-        # Alias the select method to our own
         alias_method :select_without_analyzer, :select
         
         def select(sql, name = nil)
           query_results = select_without_analyzer(sql, name)
           
           if @logger and @logger.level <= Logger::INFO
-            analyzer_results = []
-            @logger.silence do
-              analyzer_results = select_without_analyzer("explain " << sql, name)
-            end
-            @logger.debug(format_log_entry("\e[7mAnalyzing #{name}\e[0m\n", ''))
-            @logger.debug(analyzer_results.columnized + "\n\n")
-          end
-          
+            @logger.debug(
+              @logger.silence do
+                format_log_entry("Analyzing #{name}\n",
+                  "#{select_without_analyzer("explain #{sql}", name).qa_columnized}\n"
+                )
+              end
+            )
+          end          
           query_results
         end
     end
