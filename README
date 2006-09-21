@@ -13,7 +13,7 @@ information on understanding the results.
 
 = Installation
 
-script/plugin install http://svn.nfectio.us/plugins/query_analyzer/trunk
+script/plugin install http://svn.nfectio.us/plugins/query_analyzer
 
 = Example Use
 
