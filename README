@@ -84,4 +84,11 @@ Okay. Now MySQL is using an index satisfy the WHERE condition. Using the index, 
 find the single row that matched, preventing the full table scan.
 
 
-Copyright (c) 2006 Bob Silva, released under the MIT license
+Credits:
+The extension of the Array class for printing the columnized records was originally
+written by Peter Cooper who adapted it from Courtenay from #caboose.
+
+http://www.rubyinside.com/columnized-text-datasets-in-rails-71.html
+http://habtm.com/articles/2006/06/10/pretty-tables-for-ruby-objects
+
+Released under the MIT license (download your own if you need it)
