@@ -44,7 +44,7 @@ module ActiveRecord
                   "#{select_without_analyzer("explain #{sql}", name).qa_columnized}\n"
                 )
               end
-            )
+            ) if sql =~ /^select/i
           end          
           query_results
         end
