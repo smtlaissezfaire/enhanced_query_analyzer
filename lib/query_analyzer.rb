@@ -26,28 +26,16 @@ class Array
   end
 end
 
+ActiveRecord::ConnectionAdapters::MysqlAdapter.class_eval do
+  alias_method :old_select_aliased_by_query_analyzer, :select
 
+  def select(sql, name = nil)
+    result = old_select_aliased_by_query_analyzer(sql, name)
 
-module ActiveRecord
-  module ConnectionAdapters
-    class MysqlAdapter < AbstractAdapter
-      private
-        alias_method :select_without_analyzer, :select
-        
-        def select(sql, name = nil)
-          query_results = select_without_analyzer(sql, name)
-          
-          if @logger and @logger.level <= Logger::INFO
-            @logger.debug(
-              @logger.silence do
-                format_log_entry("Analyzing #{name}\n",
-                  "#{select_without_analyzer("explain #{sql}", name).qa_columnized}\n"
-                )
-              end
-            ) if sql =~ /^select/i
-          end          
-          query_results
-        end
+    if !(sql =~ /.*(explain|query_logs).*/i)
+      QueryLog.create!(:query => sql, :explain => select("explain #{sql}").qa_columnized)
     end
+    
+    result
   end
 end
