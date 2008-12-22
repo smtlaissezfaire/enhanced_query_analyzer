@@ -3,12 +3,25 @@
 
 = Installation
 
+Install it in vendor/plugins:
 
-= Example Use
+  <braid add / git clone / git submodule> \
+    git://github.com/smtlaissezfaire/enhanced_query_analyzer.git \
+    vendor/plguins/enhanced_query_analyzer
 
 
-= Analyze the results
+  Add the model and migration:
 
-Credits:
+    ./script/generate enhanced_query_plugin
+
+  Migrate:
+
+    rake db:migrate
+
+= Usage
+
+= Credits
+
+= License
 
 Dual licensed under the MIT & GPL licenses.
