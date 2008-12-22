@@ -1,0 +1,6 @@
+
+- Store query times
+- generate: model
+- generate: migration
+- ensure logger output is correct
+- flag to turn on/off
