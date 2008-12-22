@@ -59,8 +59,13 @@ describe "Running a select query" do
     QueryLog.find(:first).query_time.should_not be_nil
   end
 
-  it "should still return the result even if the QueryLog raises an error" do
+  it "should still return the result even if the QueryLog raises a Mysql::Error error" do
     QueryLog.stub!(:create).and_raise Mysql::Error
+    User.find(:all).should == []
+  end
+
+  it "should still return the result even if the QueryLog raises an ActiveRecord::RecordInvalid error" do
+    QueryLog.stub!(:create).and_raise ActiveRecord::RecordInvalid
     User.find(:all).should == []
   end
 end

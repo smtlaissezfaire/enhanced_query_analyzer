@@ -25,7 +25,7 @@ ActiveRecord::ConnectionAdapters::MysqlAdapter.class_eval do
 
       begin
         QueryLog.create(:query => sql, :explain => select("explain #{sql}"), :query_time => time)
-      rescue Mysql::Error
+      rescue
       end
       
       result
