@@ -23,7 +23,11 @@ ActiveRecord::ConnectionAdapters::MysqlAdapter.class_eval do
         result = old_select_aliased_by_query_analyzer(sql, name)
       end
 
-      QueryLog.create!(:query => sql, :explain => select("explain #{sql}"), :query_time => time)
+      begin
+        QueryLog.create(:query => sql, :explain => select("explain #{sql}"), :query_time => time)
+      rescue Mysql::Error
+      end
+      
       result
     else
       old_select_aliased_by_query_analyzer(sql, name)
