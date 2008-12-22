@@ -43,4 +43,13 @@ describe "Running a select query" do
     output = read_fixture("typical_output")
     QueryLog.find(:first).explain.should == output
   end
+
+  it "should not create an entry if logging is turned off" do
+    QueryAnalyzer.logging = false
+    lambda {
+      User.find_by_sql <<-SQL
+        SELECT * FROM users
+      SQL
+    }.should_not change(QueryLog, :count)
+  end
 end
