@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + "/../spec_helper"
 
 describe "Running a select query" do
   before(:each) do
+    QueryAnalyzer.reset_logging!
     QueryLog.destroy_all
   end
 
@@ -51,5 +52,10 @@ describe "Running a select query" do
         SELECT * FROM users
       SQL
     }.should_not change(QueryLog, :count)
+  end
+
+  it "should record the query time" do
+    User.find(:first)
+    QueryLog.find(:first).query_time.should_not be_nil
   end
 end
