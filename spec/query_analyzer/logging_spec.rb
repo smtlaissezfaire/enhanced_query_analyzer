@@ -34,12 +34,13 @@ describe "Running a select query" do
     QueryLog.find(:first).query.should == "SELECT * FROM users"
   end
 
+  def read_fixture(file)
+    File.read("#{File.dirname(__FILE__)}/fixtures/#{file}")
+  end
+
   it "should store the explain" do
     User.find_by_sql "SELECT * FROM users"
-    output = "select_type | key_len | type | Extra | id | possible_keys | rows | table | ref | key
-   ------------------------------------------------------------------------------------
-   SIMPLE      |         | ALL  |       | 1  |               | 1    | users |     "
-
+    output = read_fixture("typical_output")
     QueryLog.find(:first).explain.should == output
   end
 end
