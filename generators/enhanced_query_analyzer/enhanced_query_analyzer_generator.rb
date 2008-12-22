@@ -4,7 +4,6 @@ class EnhancedQueryAnalyzerGenerator < Rails::Generator::Base
       m.file "models/query_log.rb", "app/models/query_log.rb"
       m.migration_template "migrate/create_query_log.rb", "db/migrate", {
         :migration_file_name => 'create_query_log',
-        :assigns => yaffle_local_assigns
       }
     end
   end
