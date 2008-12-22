@@ -1,3 +1,18 @@
+module QueryAnalyzer
+  class << self
+    attr_writer :logging
+
+    def logging
+      @logging = true if @logging.equal? nil
+      @logging
+    end
+
+    def reset_logging!
+      @logging = nil
+    end
+  end
+end
+
 ActiveRecord::ConnectionAdapters::MysqlAdapter.class_eval do
   alias_method :old_select_aliased_by_query_analyzer, :select
 
