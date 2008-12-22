@@ -5,9 +5,7 @@ ActiveRecord::ConnectionAdapters::MysqlAdapter.class_eval do
     result = old_select_aliased_by_query_analyzer(sql, name)
 
     if !(sql =~ /.*(explain|query_logs).*/i)
-      explain_output = select("explain #{sql}")
-      
-      QueryLog.create!(:query => sql, :explain => explain_output)
+      QueryLog.create!(:query => sql, :explain => select("explain #{sql}"))
     end
     
     result
