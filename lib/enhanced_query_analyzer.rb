@@ -1,4 +1,4 @@
-module QueryAnalyzer
+module EnhancedQueryAnalyzer
   class << self
     attr_writer :logging
 
@@ -17,7 +17,7 @@ ActiveRecord::ConnectionAdapters::MysqlAdapter.class_eval do
   alias_method :old_select_aliased_by_query_analyzer, :select
 
   def select(sql, name = nil)
-    if QueryAnalyzer.logging && !(sql =~ /.*(explain|query_logs).*/i)
+    if EnhancedQueryAnalyzer.logging && !(sql =~ /.*(explain|query_logs).*/i)
       result = nil
       time = Benchmark.realtime do
         result = old_select_aliased_by_query_analyzer(sql, name)

@@ -1,1 +1,1 @@
-require File.dirname(__FILE__) + "/lib/query_analyzer"
+require File.dirname(__FILE__) + "/lib/enhanced_query_analyzer"

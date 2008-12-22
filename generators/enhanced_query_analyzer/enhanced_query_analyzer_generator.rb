@@ -1,4 +1,4 @@
-class QueryAnalyzerGenerator < Rails::Generator::Base
+class EnhancedQueryAnalyzerGenerator < Rails::Generator::Base
   def manifest
     record do |m|
       m.file "models/query_log.rb", "app/models/query_log.rb"

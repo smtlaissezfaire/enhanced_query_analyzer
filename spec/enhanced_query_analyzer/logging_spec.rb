@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + "/../spec_helper"
 
 describe "Running a select query" do
   before(:each) do
-    QueryAnalyzer.reset_logging!
+    EnhancedQueryAnalyzer.reset_logging!
     QueryLog.destroy_all
   end
 
@@ -46,7 +46,7 @@ describe "Running a select query" do
   end
 
   it "should not create an entry if logging is turned off" do
-    QueryAnalyzer.logging = false
+    EnhancedQueryAnalyzer.logging = false
     lambda {
       User.find_by_sql <<-SQL
         SELECT * FROM users
