@@ -20,7 +20,20 @@ Install it in vendor/plugins:
 
 = Usage
 
+  All select queries will be logged to the query_logs table.
+
+  You can turn off all query logging at any time by putting the following in environment.rb:
+
+      EnhancedQueryAnalyzer.logging = false
+
+  You can also add the ability to dynamically run and log the explain each query:
+
+      EnhancedQueryAnalyzer.explain_logging = true
+
 = Credits
+
+  Written by Scott Taylor <scott@railsnewbie.com>.
+  Sponsored by Eastmedia (http://eastmedia.com/).
 
 = License
 
