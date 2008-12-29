@@ -68,4 +68,10 @@ describe "Running a select query" do
     QueryLog.stub!(:create).and_raise ActiveRecord::RecordInvalid
     User.find(:all).should == []
   end
+
+  it "should not log queries to the query_logs table" do
+    lambda {
+      QueryLog.find(:first)
+    }.should_not change(QueryLog, :count)
+  end
 end
