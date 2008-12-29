@@ -46,16 +46,24 @@ module EnhancedQueryAnalyzer
         result = run_query(sql, name)
       end
 
-      if select_query?(sql)
-        begin
-          QueryLog.create(:query => sql, :explain => run_query("explain #{sql}"), :query_time => time)
-        rescue Mysql::Error; end
-      end
-      
+      save_logged_query_time(sql, time)
+
       result
     end
 
   private
+
+    def save_logged_query_time(sql, time)
+      if select_query?(sql)
+        begin
+          QueryLog.create(:query => sql, :explain => explain(sql), :query_time => time)
+        rescue Mysql::Error; end
+      end
+    end
+
+    def explain(sql)
+      run_query("explain #{sql}")
+    end
 
     def log_query?(sql)
       logging_on? && table_for_selection?(sql)
