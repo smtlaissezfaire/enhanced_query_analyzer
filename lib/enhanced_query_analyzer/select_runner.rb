@@ -1,8 +1,8 @@
 module EnhancedQueryAnalyzer
   class SelectRunner
     def initialize(adapter, logging_on, explain_logging_on)
-      @adapter = adapter
-      @logging_on = logging_on
+      @adapter            = adapter
+      @logging_on         = logging_on
       @explain_logging_on = explain_logging_on
     end
 
