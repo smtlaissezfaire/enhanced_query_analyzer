@@ -1,3 +1,5 @@
+require File.dirname(__FILE__) + "/enhanced_query_analyzer/select_proxy"
+
 module EnhancedQueryAnalyzer
   module Logging
     attr_writer :logging, :explain_logging
@@ -14,12 +16,6 @@ module EnhancedQueryAnalyzer
     def reset_logging!
       @logging = nil
       @explain_logging = nil
-    end
-  end
-
-  module SelectProxy
-    def select(adapter, sql, name)
-      SelectRunner.new(adapter, logging, explain_logging).select(sql, name)
     end
   end
 
