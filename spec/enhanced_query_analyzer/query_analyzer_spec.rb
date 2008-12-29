@@ -18,4 +18,19 @@ describe EnhancedQueryAnalyzer do
     EnhancedQueryAnalyzer.reset_logging!
     EnhancedQueryAnalyzer.logging.should be_true
   end
+
+  it "should have explain logging off by default" do
+    EnhancedQueryAnalyzer.explain_logging.should be_false
+  end
+
+  it "should be able to turn explain_logging on" do
+    EnhancedQueryAnalyzer.explain_logging = true
+    EnhancedQueryAnalyzer.explain_logging.should be_true
+  end
+
+  it "should reset explain_logging to false when reset_logging! is called" do
+    EnhancedQueryAnalyzer.explain_logging = true
+    EnhancedQueryAnalyzer.reset_logging!
+    EnhancedQueryAnalyzer.explain_logging.should be_false
+  end
 end

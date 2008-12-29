@@ -1,6 +1,10 @@
 module EnhancedQueryAnalyzer
   class << self
-    attr_writer :logging
+    attr_writer :logging, :explain_logging
+
+    def explain_logging
+      @explain_logging ||= false
+    end
 
     def logging
       @logging = true if @logging.equal? nil
@@ -9,6 +13,7 @@ module EnhancedQueryAnalyzer
 
     def reset_logging!
       @logging = nil
+      @explain_logging = nil
     end
 
     def select(adapter, sql, name)
