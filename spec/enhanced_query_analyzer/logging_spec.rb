@@ -40,12 +40,6 @@ describe "Running a select query" do
     File.read("#{File.dirname(__FILE__)}/fixtures/#{file}")
   end
 
-  it "should store the explain" do
-    User.find_by_sql "SELECT * FROM users"
-    output = read_fixture("typical_output")
-    QueryLog.find(:first).explain.should == output
-  end
-
   it "should not create an entry if logging is turned off" do
     EnhancedQueryAnalyzer.logging = false
     lambda {
@@ -75,5 +69,24 @@ describe "Running a select query" do
     lambda {
       User.create!
     }.should_not change(QueryLog, :count)
+  end
+
+  it "should not log the explain if explain is turned off (true by default)" do
+    User.find(:first)
+    QueryLog.find(:first).explain.should be_nil
+  end
+
+  it "should not log the explain if explain is turned off (explicitly)" do
+    EnhancedQueryAnalyzer.explain_logging = false
+    User.find(:first)
+    QueryLog.find(:first).explain.should be_nil
+  end
+
+  it "should store the explain when explain_logging = true" do
+    EnhancedQueryAnalyzer.explain_logging = true
+    
+    User.find_by_sql "SELECT * FROM users"
+    output = read_fixture("typical_output")
+    QueryLog.find(:first).explain.should == output
   end
 end

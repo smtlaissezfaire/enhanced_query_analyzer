@@ -17,20 +17,25 @@ module EnhancedQueryAnalyzer
     end
 
     def select(adapter, sql, name)
-      SelectRunner.new(adapter, logging).select(sql, name)
+      SelectRunner.new(adapter, logging, explain_logging).select(sql, name)
     end
   end
 
   class SelectRunner
-    def initialize(adapter, logging_on)
+    def initialize(adapter, logging_on, explain_logging_on)
       @adapter = adapter
       @logging_on = logging_on
+      @explain_logging_on = explain_logging_on
     end
 
     attr_reader :logging_on
 
     def logging_on?
       @logging_on ? true : false
+    end
+
+    def explain_logging_on?
+      @explain_logging_on ? true : false
     end
 
     def select(sql, name)
@@ -67,7 +72,7 @@ module EnhancedQueryAnalyzer
     end
 
     def explain(sql)
-      run_query("explain #{sql}")
+      explain_logging_on? ? run_query("explain #{sql}") : nil
     end
 
     def log_query?(sql)
