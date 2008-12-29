@@ -1,6 +1,8 @@
-require File.dirname(__FILE__) + "/enhanced_query_analyzer/logging"
-require File.dirname(__FILE__) + "/enhanced_query_analyzer/select_runner"
-require File.dirname(__FILE__) + "/enhanced_query_analyzer/select_proxy"
+
+dir = File.dirname(__FILE__) + "/enhanced_query_analyzer"
+require "#{dir}/logging"
+require "#{dir}/select_runner"
+require "#{dir}/select_proxy"
 
 module EnhancedQueryAnalyzer
   extend Logging
