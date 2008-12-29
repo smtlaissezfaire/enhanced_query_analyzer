@@ -4,6 +4,7 @@ describe "Running a select query" do
   before(:each) do
     EnhancedQueryAnalyzer.reset_logging!
     QueryLog.destroy_all
+    User.delete_all
   end
 
   it "should create an entry in the query log" do
@@ -64,14 +65,15 @@ describe "Running a select query" do
     User.find(:all).should == []
   end
 
-  it "should still return the result even if the QueryLog raises an ActiveRecord::RecordInvalid error" do
-    QueryLog.stub!(:create).and_raise ActiveRecord::RecordInvalid
-    User.find(:all).should == []
-  end
-
   it "should not log queries to the query_logs table" do
     lambda {
       QueryLog.find(:first)
+    }.should_not change(QueryLog, :count)
+  end
+
+  it "should not log the query if the query isn't a select" do
+    lambda {
+      User.create!
     }.should_not change(QueryLog, :count)
   end
 end
