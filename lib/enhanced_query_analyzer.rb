@@ -12,22 +12,61 @@ module EnhancedQueryAnalyzer
     end
 
     def select(adapter, sql, name)
-      if EnhancedQueryAnalyzer.logging && !(sql =~ /.*(explain|query_logs).*/i)
-        result = nil
-        time = Benchmark.realtime do
-          result = adapter.old_select_aliased_by_query_analyzer(sql, name)
-        end
+      SelectRunner.new(adapter, logging).select(sql, name)
+    end
+  end
 
-        if sql =~ /select/i
-          begin
-            QueryLog.create(:query => sql, :explain => adapter.old_select_aliased_by_query_analyzer("explain #{sql}"), :query_time => time)
-          rescue Mysql::Error; end
-        end
-        
-        result
+  class SelectRunner
+    def initialize(adapter, logging_on)
+      @adapter = adapter
+      @logging_on = logging_on
+    end
+
+    attr_reader :logging_on
+
+    def logging_on?
+      @logging_on ? true : false
+    end
+
+    def select(sql, name)
+      if log_query?(sql)
+        benchmark_and_run_query(sql, name)
       else
-        adapter.old_select_aliased_by_query_analyzer(sql, name)
+        run_query(sql, name)
       end
+    end
+
+    def run_query(sql, name = nil)
+      @adapter.old_select_aliased_by_query_analyzer(sql, name)
+    end
+
+    def benchmark_and_run_query(sql, name)
+      result = nil
+      time = Benchmark.realtime do
+        result = run_query(sql, name)
+      end
+
+      if select_query?(sql)
+        begin
+          QueryLog.create(:query => sql, :explain => run_query("explain #{sql}"), :query_time => time)
+        rescue Mysql::Error; end
+      end
+      
+      result
+    end
+
+  private
+
+    def log_query?(sql)
+      logging_on? && table_for_selection?(sql)
+    end
+
+    def table_for_selection?(sql)
+      !(sql =~ /.*(explain|query_logs).*/i)
+    end
+
+    def select_query?(sql)
+      sql =~ /select/i
     end
   end
 end
