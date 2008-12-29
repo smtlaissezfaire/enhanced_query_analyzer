@@ -1,5 +1,5 @@
 module EnhancedQueryAnalyzer
-  class << self
+  module Logging
     attr_writer :logging, :explain_logging
 
     def explain_logging
@@ -15,11 +15,16 @@ module EnhancedQueryAnalyzer
       @logging = nil
       @explain_logging = nil
     end
+  end
 
+  module SelectProxy
     def select(adapter, sql, name)
       SelectRunner.new(adapter, logging, explain_logging).select(sql, name)
     end
   end
+
+  extend Logging
+  extend SelectProxy
 
   class SelectRunner
     def initialize(adapter, logging_on, explain_logging_on)
