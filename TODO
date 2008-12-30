@@ -7,4 +7,6 @@ TODOs:
 - [X] Fix logging of queries
 - [ ] Configurable db for unit tests.
 - [ ] Can it be made database agnostic?
+- [ ] Log to the *.log
+- [ ] Disable automatically for RAILS_ENV = test?
 
