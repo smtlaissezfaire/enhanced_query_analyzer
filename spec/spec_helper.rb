@@ -25,7 +25,7 @@ private
       end
 
       create_table :query_logs, :force => true do |t|
-        t.string :query
+        t.text   :query
         t.float  :query_time
         t.string :explain
         t.timestamps

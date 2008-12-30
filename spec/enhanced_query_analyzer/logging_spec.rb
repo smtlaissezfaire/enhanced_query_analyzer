@@ -89,4 +89,23 @@ describe "Running a select query" do
     output = read_fixture("typical_output")
     QueryLog.find(:first).explain.should == output
   end
+
+  describe "regressions" do
+    it "should store the entire query (not a truncated version)" do
+      EnhancedQueryAnalyzer.explain_logging = true
+
+      query = <<-SQL
+        SELECT * FROM users 
+        WHERE 
+          first_name = 'foobarbazfoobarbazfoobarbazfoobarbazfoobarbaz' OR
+          first_name = 'foobarbazfoobarbazfoobarbazfoobarbazfoobarbaz' OR
+          first_name = 'somereallyreallylongname'
+        ORDER BY first_name
+        LIMIT 3
+      SQL
+      
+      User.find_by_sql(query)
+      QueryLog.find(:first).query.should == query
+    end
+  end
 end

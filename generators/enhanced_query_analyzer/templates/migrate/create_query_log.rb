@@ -1,7 +1,7 @@
 class CreateQueryLog < ActiveRecord::Migration
   def self.up
     create_table :query_logs do |t|
-      t.string :query
+      t.text   :query
       t.float  :query_time
       t.string :explain
       t.timestamps
