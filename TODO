@@ -1,0 +1,10 @@
+
+TODOs:
+
+- [ ] Add versioning
+- [ ] Only log queries over a certain time
+- [ ] Better documentation.  Add running unit tests section
+- [ ] EXPLAIN regression.  Shouldn't create a STRING row for explain column
+- [ ] Configurable db for unit tests.
+- [ ] Can it be made database agnostic?
+
