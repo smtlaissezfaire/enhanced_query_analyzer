@@ -1,0 +1,10 @@
+-- create_table(:innodb, {:force=>true, :options=>"ENGINE=InnoDB"})
+   -> 0.0237s
+-- create_table(:myisam, {:force=>true, :options=>"ENGINE=MyISAM"})
+   -> 0.0030s
+-- create_table(:archive, {:force=>true, :options=>"ENGINE=Archive"})
+   -> 0.0029s
+      user     system      total        real
+inserts with innodb storage engine  9.240000   0.870000  10.110000 ( 18.102314)
+inserts with myisam storage engine  5.890000   0.490000   6.380000 (  8.401665)
+inserts with archive storage engine  5.900000   0.480000   6.380000 (  8.426003)
