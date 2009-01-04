@@ -3,10 +3,9 @@ TODOs:
 
 - [ ] Add versioning
 - [ ] Only log queries over a certain time
-- [ ] Better documentation.  Add running unit tests section
+- [X] Better documentation.  Add running unit tests section
 - [X] Fix logging of queries
-- [ ] Configurable db for unit tests.
-- [ ] Can it be made database agnostic?
-- [ ] Log to the *.log
+- [ ] Log to the log file
 - [ ] Disable automatically for RAILS_ENV = test?
+- [ ] Other things to speed up inserts?
 
