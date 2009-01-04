@@ -107,5 +107,12 @@ describe "Running a select query" do
       User.find_by_sql(query)
       QueryLog.find(:first).query.should == query
     end
+
+    it "should store the entire explain" do
+      explain_text = "explain" * 100
+
+      QueryLog.create!(:explain => explain_text)
+      QueryLog.find(:first).explain.should == explain_text
+    end
   end
 end

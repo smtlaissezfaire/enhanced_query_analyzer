@@ -3,7 +3,7 @@ class CreateQueryLog < ActiveRecord::Migration
     create_table :query_logs, :options => 'ENGINE=Archive' do |t|
       t.text   :query
       t.float  :query_time
-      t.string :explain
+      t.text   :explain
       t.timestamps
     end
   end
