@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + "/lib/enhanced_query_analyzer"
 
 ActiveRecord::ConnectionAdapters::MysqlAdapter.class_eval do
-  unless defined?(:old_select_aliased_by_query_analyzer)
+  if !instance_methods.include?("old_select_aliased_by_query_analyzer")
     public :select
     alias_method :old_select_aliased_by_query_analyzer, :select
 
