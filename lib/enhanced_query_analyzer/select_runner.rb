@@ -45,7 +45,7 @@ module EnhancedQueryAnalyzer
       if select_query?(sql)
         begin
           QueryLog.create(:query => sql, :explain => explain(sql), :query_time => time)
-        rescue Mysql::Error; end
+        rescue ActiveRecord::StatementInvalid; end
       end
     end
 

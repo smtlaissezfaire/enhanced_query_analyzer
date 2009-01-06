@@ -54,8 +54,8 @@ describe "Running a select query" do
     QueryLog.find(:first).query_time.should_not be_nil
   end
 
-  it "should still return the result even if the QueryLog raises a Mysql::Error error" do
-    QueryLog.stub!(:create).and_raise Mysql::Error
+  it "should still return the result even if the QueryLog raises a ActiveRecord::StatementInvalid error (because the table doesn't exist yet)" do
+    QueryLog.stub!(:create).and_raise(ActiveRecord::StatementInvalid)
     User.find(:all).should == []
   end
 
