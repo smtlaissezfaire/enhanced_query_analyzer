@@ -11,7 +11,7 @@ Install it in vendor/plugins:
 
   Add the model and migration:
 
-    ./script/generate enhanced_query_plugin
+    ./script/generate enhanced_query_analyzer
 
   Migrate:
 
