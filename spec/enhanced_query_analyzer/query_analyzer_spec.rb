@@ -33,4 +33,13 @@ describe EnhancedQueryAnalyzer do
     EnhancedQueryAnalyzer.reset!
     EnhancedQueryAnalyzer.explain_logging.should be_false
   end
+
+  it "should have a nil slow_query_time" do
+    EnhancedQueryAnalyzer.slow_query_time.should be_nil
+  end
+
+  it "should be able to set the slow_query_time" do
+    EnhancedQueryAnalyzer.slow_query_time = 10
+    EnhancedQueryAnalyzer.slow_query_time.should == 10
+  end
 end
