@@ -16,25 +16,19 @@ module EnhancedQueryAnalyzer
       @explain_logging_on ? true : false
     end
 
-    def select(sql, name)
-      if log_query?(sql)
-        benchmark_and_run_query(sql, name)
-      else
-        run_query(sql, name)
-      end
-    end
-
     def run_query(sql, name = nil)
       @adapter.old_select_aliased_by_query_analyzer(sql, name)
     end
 
-    def benchmark_and_run_query(sql, name)
+    def select(sql, name)
       result = nil
       time = Benchmark.realtime do
         result = run_query(sql, name)
       end
 
-      save_logged_query_time(sql, time)
+      if log_query?(sql)
+        save_logged_query_time(sql, time)
+      end
 
       result
     end
