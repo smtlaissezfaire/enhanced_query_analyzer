@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + "/../spec_helper"
 
 describe "Running a select query" do
   before(:each) do
-    EnhancedQueryAnalyzer.reset_logging!
+    EnhancedQueryAnalyzer.reset!
     QueryLog.destroy_all
     User.delete_all
   end

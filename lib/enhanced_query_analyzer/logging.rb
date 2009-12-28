@@ -11,8 +11,8 @@ module EnhancedQueryAnalyzer
       @logging
     end
 
-    def reset_logging!
-      @logging = nil
+    def reset!
+      @logging         = nil
       @explain_logging = nil
     end
   end

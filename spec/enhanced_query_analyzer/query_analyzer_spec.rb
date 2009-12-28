@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + "/../spec_helper"
 
 describe EnhancedQueryAnalyzer do
   before(:each) do
-    EnhancedQueryAnalyzer.reset_logging!
+    EnhancedQueryAnalyzer.reset!
   end
 
   it "should have logging on by default" do
@@ -15,7 +15,7 @@ describe EnhancedQueryAnalyzer do
   end
 
   it "should be able to reset the logs" do
-    EnhancedQueryAnalyzer.reset_logging!
+    EnhancedQueryAnalyzer.reset!
     EnhancedQueryAnalyzer.logging.should be_true
   end
 
@@ -28,9 +28,9 @@ describe EnhancedQueryAnalyzer do
     EnhancedQueryAnalyzer.explain_logging.should be_true
   end
 
-  it "should reset explain_logging to false when reset_logging! is called" do
+  it "should reset explain_logging to false when reset! is called" do
     EnhancedQueryAnalyzer.explain_logging = true
-    EnhancedQueryAnalyzer.reset_logging!
+    EnhancedQueryAnalyzer.reset!
     EnhancedQueryAnalyzer.explain_logging.should be_false
   end
 end
