@@ -115,7 +115,7 @@ describe "Running a select query" do
 
       User.find_by_sql "SELECT * FROM users"
 
-      time.to_s[0..10].should == QueryLog.find(:first).query_time.to_s[0..10]
+      time.to_s[0..5].should == QueryLog.find(:first).query_time.to_s[0..5]
     end
   end
 
