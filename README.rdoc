@@ -1,7 +1,6 @@
 = Enhanced Query Analyzer Plugin for MySQL on Rails
 
-
-= Installation
+== Installation
 
 Install it in vendor/plugins:
 
@@ -15,7 +14,7 @@ Migrate:
 
   rake db:migrate
 
-= Usage
+== Usage
 
 All select queries will be logged to the query_logs table.  You now have the ability to
 store historical data of all of your database access.
@@ -28,7 +27,7 @@ You can also add the ability to dynamically run and log the explain of each quer
 
     EnhancedQueryAnalyzer.explain_logging = true
 
-== Finer grained control:
+=== Finer grained control:
 
 If you'd like finer grained control over logging, provide a block to EnhancedQueryAnalyzer.log_if:
 
@@ -42,15 +41,15 @@ or only log select queries:
 
   EnhancedQueryAnalyzer.log_if { |query, time| query =~ /select/i }
 
-= Running Unit Tests
+== Running Unit Tests
 
 You'll need rspec and mysql.  The database must be named 'query_analyzer_test'
 
-= Credits
+== Credits
 
 Written by Scott Taylor <scott@railsnewbie.com>.
 Sponsored by Eastmedia (http://eastmedia.com).
 
-= License
+== License
 
 Dual licensed under the MIT & GPL licenses.
