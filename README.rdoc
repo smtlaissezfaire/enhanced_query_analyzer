@@ -49,7 +49,7 @@ You'll need rspec and mysql.  The database must be named 'query_analyzer_test'
 = Credits
 
 Written by Scott Taylor <scott@railsnewbie.com>.
-Sponsored by Eastmedia (http://eastmedia.com/).
+Sponsored by Eastmedia (http://eastmedia.com).
 
 = License
 
