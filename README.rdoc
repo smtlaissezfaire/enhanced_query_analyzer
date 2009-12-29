@@ -1,4 +1,4 @@
-= Enhanced Query Analyzer Plugin for MySQL on Rails
+= Enhanced Query Analyzer Rails Plugin (for MySQL)
 
 == Installation
 
