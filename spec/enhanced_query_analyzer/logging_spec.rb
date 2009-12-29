@@ -8,7 +8,7 @@ describe "Running a select query" do
   end
 
   it "should create an entry in the query log" do
-    lambda { 
+    lambda {
       User.find_by_sql <<-SQL
         SELECT * FROM users
       SQL
@@ -16,7 +16,7 @@ describe "Running a select query" do
   end
 
   it "should not create an entry for an 'explain'" do
-    lambda { 
+    lambda {
       User.find_by_sql <<-SQL
          EXPLAIN select * from users
       SQL
@@ -24,7 +24,7 @@ describe "Running a select query" do
   end
 
   it "should not create an extry with a lowercase explain" do
-    lambda { 
+    lambda {
       User.find_by_sql <<-SQL
          explain select * from users
       SQL
@@ -84,10 +84,39 @@ describe "Running a select query" do
 
   it "should store the explain when explain_logging = true" do
     EnhancedQueryAnalyzer.explain_logging = true
-    
+
     User.find_by_sql "SELECT * FROM users"
     output = read_fixture("typical_output")
     QueryLog.find(:first).explain.should == output
+  end
+
+  describe "logging conditionally" do
+    it "should not log a query if the logging conditions say it's false" do
+      lambda {
+        EnhancedQueryAnalyzer.log_if { |_, _| false }
+        User.find_by_sql "SELECT * FROM users"
+      }.should_not change { QueryLog.count }
+    end
+
+    it "should yield the query to the block" do
+      query = nil
+
+      EnhancedQueryAnalyzer.log_if { |query_given, _| query = query_given }
+
+      User.find_by_sql "SELECT * FROM users"
+
+      query.should == "SELECT * FROM users"
+    end
+
+    it "should yield the time to the block" do
+      time = nil
+
+      EnhancedQueryAnalyzer.log_if { |_, time_given| time = time_given }
+
+      User.find_by_sql "SELECT * FROM users"
+
+      time.to_s[0..10].should == QueryLog.find(:first).query_time.to_s[0..10]
+    end
   end
 
   describe "regressions" do
@@ -95,15 +124,15 @@ describe "Running a select query" do
       EnhancedQueryAnalyzer.explain_logging = true
 
       query = <<-SQL
-        SELECT * FROM users 
-        WHERE 
+        SELECT * FROM users
+        WHERE
           first_name = 'foobarbazfoobarbazfoobarbazfoobarbazfoobarbaz' OR
           first_name = 'foobarbazfoobarbazfoobarbazfoobarbazfoobarbaz' OR
           first_name = 'somereallyreallylongname'
         ORDER BY first_name
         LIMIT 3
       SQL
-      
+
       User.find_by_sql(query)
       QueryLog.find(:first).query.should == query
     end

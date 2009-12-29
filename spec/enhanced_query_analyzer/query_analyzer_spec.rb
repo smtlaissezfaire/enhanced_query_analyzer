@@ -42,4 +42,22 @@ describe EnhancedQueryAnalyzer do
     EnhancedQueryAnalyzer.slow_query_time = 10
     EnhancedQueryAnalyzer.slow_query_time.should == 10
   end
+
+  it "should always log queries" do
+    EnhancedQueryAnalyzer.log_query?("select * from foo", 10).should be_true
+  end
+
+  it "should be able to set a proc which determines whether the query should be run" do
+    EnhancedQueryAnalyzer.log_if do |_, _|
+      false
+    end
+
+    EnhancedQueryAnalyzer.log_query?("select * from foo", 10).should be_false
+  end
+
+  it "should be able to reset the logging conditions" do
+    EnhancedQueryAnalyzer.log_if { |_, _| false }
+    EnhancedQueryAnalyzer.reset!
+    EnhancedQueryAnalyzer.log_query?("select *", 1).should be_true
+  end
 end

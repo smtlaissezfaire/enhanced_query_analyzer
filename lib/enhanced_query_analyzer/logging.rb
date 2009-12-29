@@ -17,9 +17,22 @@ module EnhancedQueryAnalyzer
 
     attr_writer :slow_query_time
 
+    def log_query?(query, time)
+      logging_conditions.call(query, time)
+    end
+
+    def logging_conditions
+      @logging_conditions ||= lambda { |_, _| true }
+    end
+
+    def log_if(&block)
+      @logging_conditions = block
+    end
+
     def reset!
-      @logging         = nil
-      @explain_logging = nil
+      @logging            = nil
+      @explain_logging    = nil
+      @logging_conditions = lambda { |_, _| true }
     end
   end
 end
