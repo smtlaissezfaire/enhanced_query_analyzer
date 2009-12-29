@@ -5,9 +5,7 @@
 
 Install it in vendor/plugins:
 
-  <braid add / git clone / git submodule> \
-    git://github.com/smtlaissezfaire/enhanced_query_analyzer.git \
-    vendor/plugins/enhanced_query_analyzer
+  ./script/plugin install git://github.com/smtlaissezfaire/enhanced_query_analyzer.git
 
 Add the model and migration:
 
