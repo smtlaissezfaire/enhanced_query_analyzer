@@ -35,7 +35,7 @@ If you'd like finer grained control over logging, provide a block to EnhancedQue
 
 For instance, if you'd only like to log queries over a second:
 
-  EnhancedQueryAnalyzer.log_if { |_, time| time > 1000 }
+  EnhancedQueryAnalyzer.log_if { |_, time| time > 1 }
 
 or only log select queries:
 
