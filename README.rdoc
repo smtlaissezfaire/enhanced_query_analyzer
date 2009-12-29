@@ -9,35 +9,35 @@ Install it in vendor/plugins:
     git://github.com/smtlaissezfaire/enhanced_query_analyzer.git \
     vendor/plugins/enhanced_query_analyzer
 
-  Add the model and migration:
+Add the model and migration:
 
-    ./script/generate enhanced_query_analyzer
+  ./script/generate enhanced_query_analyzer
 
-  Migrate:
+Migrate:
 
-    rake db:migrate
+  rake db:migrate
 
 = Usage
 
-  All select queries will be logged to the query_logs table.  You now have the ability to
-  store historical data of all of your database access.
+All select queries will be logged to the query_logs table.  You now have the ability to
+store historical data of all of your database access.
 
-  You can turn off all query logging by putting the following in environment.rb:
+You can turn off all query logging by putting the following in environment.rb:
 
-      EnhancedQueryAnalyzer.logging = false
+    EnhancedQueryAnalyzer.logging = false
 
-  You can also add the ability to dynamically run and log the explain of each query:
+You can also add the ability to dynamically run and log the explain of each query:
 
-      EnhancedQueryAnalyzer.explain_logging = true
+    EnhancedQueryAnalyzer.explain_logging = true
 
 = Running Unit Tests
 
-  You'll need rspec and mysql.  The database must be named 'query_analyzer_test'
+You'll need rspec and mysql.  The database must be named 'query_analyzer_test'
 
 = Credits
 
-  Written by Scott Taylor <scott@railsnewbie.com>.
-  Sponsored by Eastmedia (http://eastmedia.com/).
+Written by Scott Taylor <scott@railsnewbie.com>.
+Sponsored by Eastmedia (http://eastmedia.com/).
 
 = License
 
