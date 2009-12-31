@@ -41,7 +41,7 @@ describe "Running a select query" do
   end
 
   it "should not create an entry if logging is turned off" do
-    EnhancedQueryAnalyzer.logging = false
+    EnhancedQueryAnalyzer.log_if { |query, time| false }
     lambda {
       User.find_by_sql <<-SQL
         SELECT * FROM users

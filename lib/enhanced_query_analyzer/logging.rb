@@ -1,14 +1,9 @@
 module EnhancedQueryAnalyzer
   module Logging
-    attr_writer :logging, :explain_logging
+    attr_writer :explain_logging
 
     def explain_logging
       @explain_logging ||= false
-    end
-
-    def logging
-      @logging = true if @logging.equal? nil
-      @logging
     end
 
     def slow_query_time
@@ -30,7 +25,6 @@ module EnhancedQueryAnalyzer
     end
 
     def reset!
-      @logging            = nil
       @explain_logging    = nil
       @logging_conditions = lambda { |_, _| true }
     end

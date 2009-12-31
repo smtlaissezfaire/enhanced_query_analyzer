@@ -1,16 +1,9 @@
 module EnhancedQueryAnalyzer
   class SelectRunner
-    def initialize(adapter, logging_on, explain_logging_on, log_conditions)
+    def initialize(adapter, explain_logging_on, log_conditions)
       @adapter            = adapter
-      @logging_on         = logging_on
       @explain_logging_on = explain_logging_on
       @log_conditions     = log_conditions
-    end
-
-    attr_reader :logging_on
-
-    def logging_on?
-      @logging_on ? true : false
     end
 
     def explain_logging_on?
@@ -49,7 +42,7 @@ module EnhancedQueryAnalyzer
     end
 
     def log_query?(sql, time)
-      logging_on? && table_for_selection?(sql) && @log_conditions.call(sql, time)
+      table_for_selection?(sql) && @log_conditions.call(sql, time)
     end
 
     def table_for_selection?(sql)
