@@ -19,16 +19,6 @@ Migrate:
 All select queries will be logged to the query_logs table.  You now have the ability to
 store historical data of all of your database access.
 
-You can turn off all query logging by putting the following in environment.rb:
-
-    EnhancedQueryAnalyzer.logging = false
-
-You can also add the ability to dynamically run and log the explain of each query:
-
-    EnhancedQueryAnalyzer.explain_logging = true
-
-=== Finer grained control:
-
 If you'd like finer grained control over logging, provide a block to EnhancedQueryAnalyzer.log_if:
 
   EnhancedQueryAnalyzer.log_if { |query, time| <true | false> }
@@ -37,9 +27,23 @@ For instance, if you'd only like to log queries over a second:
 
   EnhancedQueryAnalyzer.log_if { |_, time| time > 1 }
 
-or only log select queries:
+Or only log queries matching some regex:
 
-  EnhancedQueryAnalyzer.log_if { |query, time| query =~ /select/i }
+  EnhancedQueryAnalyzer.log_if { |query, time| query =~ /select.../ }
+
+To turn off all logging:
+
+  EnhancedQueryAnalyzer.log_if { |_, _| false }
+
+Or in everything but the test environment (this is recommended):
+
+  EnhancedQueryAnalyzer.log_if do |query, time|
+    RAILS_ENV != "test"
+  end
+
+You can also add the ability to dynamically run and log the explain of each query:
+
+  EnhancedQueryAnalyzer.explain_logging = true
 
 == Running Unit Tests
 
